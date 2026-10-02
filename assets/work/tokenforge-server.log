@@ -1,0 +1,9 @@
+$ next start -p 3444
+   ▲ Next.js 15.5.26
+   - Local:        http://localhost:3444
+   - Network:      http://192.168.1.10:3444
+
+ ✓ Starting...
+ ✓ Ready in 1433ms
+bigint: Failed to load bindings, pure JS will be used (try npm run rebuild?)
+[ELIFECYCLE] Command failed with exit code 1.

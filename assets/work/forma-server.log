@@ -1,0 +1,8 @@
+$ next start -p 3333
+   ▲ Next.js 15.5.26
+   - Local:        http://localhost:3333
+   - Network:      http://192.168.1.10:3333
+
+ ✓ Starting...
+ ✓ Ready in 827ms
+[ELIFECYCLE] Command failed with exit code 1.

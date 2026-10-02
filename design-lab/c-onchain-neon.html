@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>C - On-Chain Neon</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#04061A;--glass:rgba(255,255,255,.05);--line:rgba(255,255,255,.12);--t1:#F2F5FF;--t2:#A6B0D6;--cy:#22D3EE;--pk:#F472B6;--gr:#4ADE80}
+*{box-sizing:border-box;margin:0}
+body{background:radial-gradient(900px 500px at 80% -5%,rgba(34,211,238,.18),transparent),radial-gradient(800px 600px at 0% 30%,rgba(244,114,182,.12),transparent),var(--bg);color:var(--t1);font:400 16px/1.6 'Space Grotesk',sans-serif}
+a{color:inherit;text-decoration:none}.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.mono{font:500 12px 'IBM Plex Mono',monospace;color:var(--cy);letter-spacing:.06em}
+.glass{background:var(--glass);border:1px solid var(--line);border-radius:18px;backdrop-filter:blur(18px)}
+nav{padding:16px 0}nav .wrap{display:flex;align-items:center;gap:24px}
+nav .pill{display:flex;align-items:center;gap:28px;padding:10px 12px 10px 24px;margin:0 auto;border-radius:999px}
+nav b{font-weight:700}nav ul{display:flex;gap:24px;list-style:none;padding:0;color:var(--t2);font-size:14px}
+.btn{padding:10px 20px;border-radius:999px;font-weight:500;font-size:14px;border:1px solid var(--line);display:inline-block}
+.btn.p{background:linear-gradient(90deg,var(--cy),var(--gr));color:#031014;border:0}
+.hero{padding:72px 0 48px}.hero .wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:32px;align-items:center}
+h1{font:700 clamp(38px,5.2vw,74px)/1.02 'Space Grotesk';letter-spacing:-.035em;margin:18px 0}
+h1 span{background:linear-gradient(90deg,var(--cy),var(--pk));-webkit-background-clip:text;color:transparent}
+.sub{color:var(--t2);font-size:18px;max-width:520px}.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.chain{position:relative;height:440px}
+.cube{position:absolute;width:110px;height:110px;border-radius:18px;background:linear-gradient(135deg,rgba(34,211,238,.35),rgba(244,114,182,.18));border:1px solid rgba(255,255,255,.3);box-shadow:0 0 40px rgba(34,211,238,.25),inset 0 0 20px rgba(255,255,255,.08);transform:rotate(45deg)}
+.c1{left:6%;top:6%}.c2{left:36%;top:26%;background:linear-gradient(135deg,rgba(244,114,182,.35),rgba(34,211,238,.18))}.c3{left:62%;top:50%}.c4{left:22%;top:62%;width:80px;height:80px}
+.link{position:absolute;height:2px;background:linear-gradient(90deg,var(--cy),var(--pk));transform-origin:left;box-shadow:0 0 12px var(--cy)}
+.l1{left:20%;top:22%;width:22%;transform:rotate(38deg)}.l2{left:50%;top:44%;width:20%;transform:rotate(38deg)}
+.portrait{position:absolute;right:0;bottom:0;width:58%;border-radius:22px;border:1px solid var(--line);box-shadow:0 20px 80px rgba(0,0,0,.6)}
+.strip .wrap{display:flex;flex-wrap:wrap;gap:12px 36px;padding:16px 24px;margin-top:32px;border-radius:18px}
+section{padding:88px 0}h2{font:700 clamp(30px,4vw,54px)/1.05 'Space Grotesk';letter-spacing:-.03em;margin:10px 0 36px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}.chip{padding:6px 16px;border-radius:999px;border:1px solid var(--line);font-size:13px;color:var(--t2)}.chip.on{border-color:var(--cy);color:var(--cy)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{padding:24px}.card h3{font-size:21px;margin:14px 0 6px}.card p{color:var(--t2);font-size:14px}
+.card .shot{height:130px;border-radius:12px;background:linear-gradient(120deg,rgba(34,211,238,.25),rgba(244,114,182,.2))}
+.tag{display:inline-block;font:500 11px 'IBM Plex Mono';padding:3px 9px;border-radius:999px;border:1px solid var(--line);color:var(--t2);margin:12px 6px 0 0}.tag.d{color:var(--gr);border-color:rgba(74,222,128,.4)}
+.xp{display:grid;gap:16px}.xp .glass{padding:28px;display:grid;grid-template-columns:180px 1fr;gap:20px}.xp h3{font-size:24px}.xp p{color:var(--t2)}
+.contact{padding:48px;display:grid;grid-template-columns:1fr 1fr;gap:40px}.f{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px;color:var(--t2);font-size:14px}
+@media(max-width:820px){nav ul{display:none}nav .pill{margin:0;padding:8px 8px 8px 20px;width:100%;justify-content:space-between}.hero .wrap,.contact{grid-template-columns:1fr}.chain{height:300px}.cube{width:70px;height:70px}.c4{display:none}.grid{grid-template-columns:1fr}.xp .glass{grid-template-columns:1fr}.contact{padding:24px}section{padding:56px 0}.cta .btn{flex:1;text-align:center}}
+</style></head><body>
+<nav><div class="wrap"><div class="glass pill"><b>WI</b><ul><li>Work</li><li>Experience</li><li>Stack</li><li>About</li><li>Contact</li></ul><a class="btn p" href="#">Hire me</a></div></div></nav>
+<header class="hero"><div class="wrap"><div><span class="mono">● AVAILABLE FOR REMOTE ROLES · 3+ YEARS</span>
+<h1>Full stack apps and <span>Solana programs</span> that ship.</h1>
+<p class="sub">Waleed Ilyas. MERN, Next.js, Anchor. From the database schema to the signed transaction.</p>
+<div class="cta"><a class="btn p" href="#">View my work</a><a class="btn" href="#">Download CV</a><a class="btn" href="#">WhatsApp</a></div></div>
+<div class="chain"><i class="link l1"></i><i class="link l2"></i><i class="cube c1"></i><i class="cube c2"></i><i class="cube c3"></i><i class="cube c4"></i><img class="portrait" src="../public/images/profile/waleed-card.webp" alt="Waleed Ilyas"></div></div>
+<div class="wrap"><div class="glass mono" style="display:flex;flex-wrap:wrap;gap:12px 36px;padding:16px 24px;margin-top:32px"><span>3+ YRS</span><span>12 PROJECTS</span><span>MERN · NEXT.JS · SOLANA/ANCHOR</span><span>PK · REMOTE-READY</span></div></div></header>
+<section><div class="wrap"><span class="mono">SELECTED WORK</span><h2>Twelve projects, from storefronts to escrow programs.</h2>
+<div class="chips"><span class="chip on">All</span><span class="chip">Web</span><span class="chip">MERN</span><span class="chip">Full Stack</span><span class="chip">Solana</span></div>
+<div class="grid">
+<div class="glass card"><div class="shot"></div><h3>SolScope</h3><p>Analytics for any Solana wallet address.</p><span class="tag d">DEVNET</span><span class="tag">Next.js</span></div>
+<div class="glass card"><div class="shot"></div><h3>SwapEscrow</h3><p>P2P token escrow with PDA vaults.</p><span class="tag d">DEVNET</span><span class="tag">Anchor</span></div>
+<div class="glass card"><div class="shot"></div><h3>StakeVault</h3><p>Staking with time-based rewards.</p><span class="tag d">DEVNET</span><span class="tag">Anchor</span></div>
+<div class="glass card"><h3>NexaCart</h3><p>MERN e-commerce with Stripe test mode.</p><span class="tag">MERN</span></div>
+<div class="glass card"><h3>TaskForge</h3><p>Real-time kanban with live presence.</p><span class="tag">Socket.io</span></div>
+<div class="glass card"><h3>LedgerLite</h3><p>Multi-tenant invoicing SaaS.</p><span class="tag">Prisma</span></div></div></div></section>
+<section><div class="wrap"><span class="mono">EXPERIENCE</span><h2>Where I've shipped.</h2><div class="xp">
+<div class="glass"><span class="mono">2024 → 2026</span><div><h3>Buggcy · Full Stack Developer</h3><p>MERN and Next.js apps, Solana wallet flows, SPL transfers, Anchor integration, Socket.io real-time.</p></div></div>
+<div class="glass"><span class="mono">2022 → 2024</span><div><h3>Invex Tech · MERN Stack Developer</h3><p>React components from Figma, admin dashboards, Express APIs, Redux Toolkit.</p></div></div></div></div></section>
+<section><div class="wrap"><div class="glass contact"><div><span class="mono">CONTACT</span><h2>Let's build something that ships.</h2><p style="color:var(--t2)">waleedilyas99@gmail.com<br>+92 317 6063654<br>Replies within 24h.</p></div><div><div class="f">Name</div><div class="f">Email</div><div class="f">Company</div><div class="f">Full-time / Contract / Freelance</div><div class="f" style="height:90px">Message</div><a class="btn p" href="#">Send message</a></div></div></div></section>
+</body></html>

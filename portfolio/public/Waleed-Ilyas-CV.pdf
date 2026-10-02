@@ -1,0 +1,32 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 462 >>
+stream
+BT /F1 24 Tf 72 720 Td (Waleed Ilyas) Tj 0 -36 Td /F1 14 Tf (Full Stack Engineer | MERN ? Next.js ? Solana) Tj 0 -24 Td (Email: waleedilyas99@gmail.com) Tj 0 -24 Td (WhatsApp: +92 317 6063654) Tj 0 -24 Td (LinkedIn: linkedin.com/in/waleed-ilyas-664839213) Tj 0 -24 Td (GitHub: github.com/Waleed-Ilyas) Tj 0 -24 Td (Location: Pakistan \(PKT, UTC+5\) | Remote-ready worldwide) Tj 0 -24 Td (3+ years across MERN, Next.js, and Solana product delivery) Tj 0 -24 Td ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000241 00000 n 
+0000000754 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+824
+%%EOF

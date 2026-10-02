@@ -1,0 +1,9 @@
+$ tsx watch src/dev.ts
+<claude-code-hint v="1" type="plugin" value="stripe@claude-plugins-official" />
+◇ injected env (10) from ..\.env
+NexaCart API on http://localhost:4000
+12:27:26 PM [tsx] change in ./src\middleware\auth.ts Restarting...
+12:27:26 PM [tsx] change in ./src\routes\products.ts Restarting...
+<claude-code-hint v="1" type="plugin" value="stripe@claude-plugins-official" />
+◇ injected env (10) from ..\.env
+NexaCart API on http://localhost:4000

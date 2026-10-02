@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>B - Editorial Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F3EFE6;--card:#EAE4D6;--ink:#15130F;--ink2:#4C463A;--rule:#15130F;--acc:#C8431E}
+*{box-sizing:border-box;margin:0}
+body{background:var(--paper);color:var(--ink);font:400 16px/1.6 Geist,sans-serif}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.mono{font:500 11px 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase}
+nav{border-bottom:1px solid var(--rule)}
+nav .wrap{display:flex;align-items:center;height:60px;gap:32px}
+nav .n{font:600 20px Fraunces,serif}
+nav ul{display:flex;gap:28px;list-style:none;padding:0;margin-left:auto;font-size:14px}
+.hire{background:var(--ink);color:var(--paper);padding:9px 18px;font-size:14px;font-weight:500}
+.hero{padding:64px 0 0}
+.hero .wrap{display:grid;grid-template-columns:7fr 5fr;gap:48px;align-items:end}
+.hero h1{font:300 clamp(44px,6.6vw,96px)/.98 Fraunces,serif;letter-spacing:-.03em;margin:20px 0 24px;text-wrap:balance}
+.hero h1 em{font-style:italic;color:var(--acc);font-weight:400}
+.hero p{font-size:19px;color:var(--ink2);max-width:520px}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin:32px 0 48px}
+.b{padding:12px 22px;border:1px solid var(--ink);font-weight:500;font-size:14px}
+.b.p{background:var(--acc);border-color:var(--acc);color:#fff}
+.ph{position:relative;background:var(--card);border:1px solid var(--rule);aspect-ratio:4/5;overflow:hidden}
+.ph img{width:100%;height:100%;object-fit:cover;object-position:50% 20%;filter:saturate(.85)}
+.ph figcaption{position:absolute;left:0;bottom:0;background:var(--paper);padding:6px 12px;border-top:1px solid var(--rule);border-right:1px solid var(--rule)}
+.facts{border-block:1px solid var(--rule);margin-top:56px}
+.facts .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+.facts div{padding:20px 24px;border-left:1px solid var(--rule)}.facts div:first-child{border-left:0;padding-left:0}
+.facts b{display:block;font:400 34px Fraunces,serif}
+section{padding:88px 0}
+.sh{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--rule);padding-bottom:12px;margin-bottom:40px}
+.sh h2{font:300 clamp(30px,4vw,54px)/1 Fraunces,serif;letter-spacing:-.02em}
+.mag{display:grid;grid-template-columns:repeat(12,1fr);gap:24px}
+.p1{grid-column:span 7}.p2{grid-column:span 5}.p3{grid-column:span 4}
+.proj{border-top:2px solid var(--ink);padding-top:16px}
+.proj .art{background:var(--card);border:1px solid var(--rule);height:260px;margin-bottom:16px;position:relative;overflow:hidden}
+.p2 .art,.p3 .art{height:190px}
+.art::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 18px,rgba(21,19,15,.08) 18px 19px)}
+.proj h3{font:500 28px Fraunces,serif}.proj p{color:var(--ink2);margin:6px 0 12px;font-size:15px}
+.proj .mono{color:var(--acc)}
+.xp{display:grid;grid-template-columns:200px 1fr;gap:24px;padding:28px 0;border-top:1px solid var(--rule)}
+.xp h3{font:500 30px Fraunces,serif;margin-bottom:8px}.xp p{color:var(--ink2);max-width:640px}
+.contact{background:var(--ink);color:var(--paper);padding:72px 0}
+.contact h2{font:300 clamp(36px,5vw,72px)/1 Fraunces,serif;margin:16px 0}
+.contact h2 em{color:#F08A66}
+.contact .wrap{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.f{border-bottom:1px solid rgba(243,239,230,.35);padding:12px 0;color:rgba(243,239,230,.6);font-size:14px}
+@media(max-width:820px){nav ul{display:none}nav .hire{margin-left:auto}.hero .wrap,.contact .wrap{grid-template-columns:1fr}.facts .wrap{grid-template-columns:1fr 1fr}.facts div:nth-child(3){border-left:0;padding-left:0}.p1,.p2,.p3{grid-column:span 12}.xp{grid-template-columns:1fr}.ph{max-width:340px}section{padding:56px 0}.cta .b{flex:1;text-align:center}}
+</style></head><body>
+<nav><div class="wrap"><a class="n" href="#">Waleed Ilyas</a><ul><li>Work</li><li>Experience</li><li>Stack</li><li>About</li><li>Contact</li></ul><span class="mono">● Open to remote roles</span><a class="hire" href="#">Hire me</a></div></nav>
+<header class="hero"><div class="wrap"><div><span class="mono">Full Stack Engineer · 3+ years · Pakistan (UTC+5)</span>
+<h1>Web apps that load fast and <em>on-chain</em> products that hold up.</h1>
+<p>I work across MongoDB, Node, React, Next.js and Solana. Schema, API, interface and deploy, owned end to end.</p>
+<div class="cta"><a class="b p" href="#">View my work</a><a class="b" href="#">Download CV</a><a class="b" href="#">WhatsApp</a></div></div>
+<figure class="ph"><img src="../public/images/profile/waleed-card.webp" alt="Waleed Ilyas"><figcaption class="mono">Waleed Ilyas, 2026</figcaption></figure></div>
+<div class="facts"><div class="wrap"><div><b>3+</b><span class="mono">Years professional</span></div><div><b>12</b><span class="mono">Personal projects</span></div><div><b>2</b><span class="mono">Product teams</span></div><div><b>Solana</b><span class="mono">Devnet, Anchor, Rust</span></div></div></div></header>
+<section><div class="wrap"><div class="sh"><h2>Selected work</h2><span class="mono">All · Web · MERN · Full Stack · Solana</span></div>
+<div class="mag">
+<div class="proj p1"><div class="art"></div><span class="mono">Solana · Devnet</span><h3>SolScope</h3><p>Wallet analytics for any address: token balances, NFT holdings, decoded transaction history.</p><span class="mono">Live · Code · Case study</span></div>
+<div class="proj p2"><div class="art"></div><span class="mono">Web · 3D</span><h3>Forma3D</h3><p>A product configurator with live price and shareable config URLs.</p><span class="mono">Live · Code · Case study</span></div>
+<div class="proj p3"><div class="art"></div><span class="mono">MERN</span><h3>NexaCart</h3><p>Storefront, Stripe test checkout, admin sales charts.</p></div>
+<div class="proj p3"><div class="art"></div><span class="mono">MERN</span><h3>HireFlow</h3><p>Job board and mini ATS with pipeline stages.</p></div>
+<div class="proj p3"><div class="art"></div><span class="mono">Solana · Devnet</span><h3>SwapEscrow</h3><p>Anchor escrow with PDA vaults and tests.</p></div>
+</div></div></section>
+<section style="background:var(--card);border-block:1px solid var(--rule)"><div class="wrap"><div class="sh"><h2>Experience</h2><span class="mono">2022 to 2026</span></div>
+<div class="xp"><span class="mono">2024 to 2026</span><div><h3>Buggcy</h3><span class="mono">Full Stack Developer</span><p style="margin-top:12px">Full-stack apps in React, Next.js, Node and MongoDB. Solana dApp features with wallet connection, SPL transfers and Anchor. Socket.io real-time updates.</p></div></div>
+<div class="xp"><span class="mono">2022 to 2024</span><div><h3>Invex Tech</h3><span class="mono">MERN Stack Developer</span><p style="margin-top:12px">Reusable React components from Figma, dashboards and admin panels with Redux Toolkit, Express APIs, Mongoose schemas.</p></div></div></div></section>
+<section class="contact"><div class="wrap"><div><span class="mono">Contact</span><h2>Let's build something <em>that ships.</em></h2><p style="opacity:.7">waleedilyas99@gmail.com · +92 317 6063654<br>Typically replies within 24h.</p></div>
+<div><div class="f">Name</div><div class="f">Email</div><div class="f">Company</div><div class="f">Full-time / Contract / Freelance</div><div class="f" style="padding-bottom:48px">Message</div><p style="margin-top:24px"><a class="b p" href="#">Send message</a></p></div></div></section>
+</body></html>

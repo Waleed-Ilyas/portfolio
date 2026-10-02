@@ -1,0 +1,60 @@
+import sys, os, re, subprocess, json
+from playwright.sync_api import sync_playwright, expect
+BASE = sys.argv[1]; OUT = sys.argv[2]; MERCHANT = "GfJ6ut6rmeovF9AmFcJcm5vhtdw7UJpF4x1CnWQfR6D8"
+os.makedirs(OUT, exist_ok=True); errors = []
+def step(m): print(f"\n== {m}", flush=True)
+def ok(m): print(f"   PASS {m}", flush=True)
+key = open("../../.env.master", encoding="utf-8-sig").read()
+helius = re.search(r"^HELIUS_API_KEY=(.*)$", key, re.M).group(1).strip()
+env = dict(os.environ, SOLANA_RPC_DEVNET=f"https://devnet.helius-rpc.com/?api-key={helius}", DEVNET_KEYPAIR="../../assets/work/devnet-e2e-keypair.json")
+def wallet_pay(url):
+    r = subprocess.run(["node", "--experimental-strip-types", "--no-warnings", "scripts/devnet-e2e.ts", "pay", url], capture_output=True, text=True, env=env, cwd="E:/WEB & BLOCKCHAIN PORTFOLIO/projects/solpay", timeout=120)
+    line = [l for l in r.stdout.strip().splitlines() if l and "bigint" not in l][-1]
+    assert r.returncode == 0, r.stderr[-300:]
+    return line
+with sync_playwright() as p:
+    b = p.chromium.launch(); pg = b.new_page(viewport={"width": 1440, "height": 900})
+    pg.on("console", lambda m: errors.append(m.text[:160]) if m.type == "error" else None)
+    pg.on("pageerror", lambda e: errors.append("pageerror: " + str(e)[:160]))
+    step("home and form validation")
+    pg.goto(BASE); expect(pg.get_by_role("heading", name=re.compile("Get paid on Solana"))).to_be_visible()
+    pg.screenshot(path=f"{OUT}/home.png")
+    pg.get_by_role("button", name="Create payment link").click()
+    for sel in ("#merchant-error", "#amount-error", "#label-error"): expect(pg.locator(sel)).to_be_visible()
+    ok("empty form shows an error under merchant, amount and label")
+    pg.fill("#merchant", "not-an-address"); pg.fill("#amount", "0.0001"); pg.fill("#label", "x")
+    pg.get_by_role("button", name="Create payment link").click()
+    expect(pg.locator("#merchant-error")).to_contain_text("valid Solana"); expect(pg.locator("#amount-error")).to_contain_text("smallest")
+    ok("bad address and too small an amount are explained")
+    pg.screenshot(path=f"{OUT}/form-errors.png")
+    step("create a link")
+    pg.get_by_role("button", name="Use the demo merchant").click()
+    assert pg.input_value("#merchant") == MERCHANT
+    pg.fill("#amount", "0.005"); pg.fill("#label", "Coffee and a croissant"); pg.fill("#memo", "Order 1042")
+    pg.get_by_role("button", name="Create payment link").click(); pg.wait_for_url(re.compile(r"/pay/.+"))
+    expect(pg.get_by_role("heading", name="Coffee and a croissant")).to_be_visible()
+    expect(pg.get_by_text("0.005 SOL").first).to_be_visible(); expect(pg.get_by_text("Waiting for payment")).to_be_visible()
+    qr = pg.get_by_role("img", name=re.compile("QR code")); qr.wait_for(); ok("pay page shows the amount, a waiting state and a QR code")
+    href = pg.get_by_role("link", name="Open in wallet app").get_attribute("href"); assert href.startswith("solana:" + MERCHANT), href
+    ok("the wallet link is a proper Solana Pay URL to the merchant")
+    pg.screenshot(path=f"{OUT}/pay-waiting.png")
+    step("a customer wallet pays from outside, the page notices live")
+    sig = wallet_pay(href); print("   payment sent:", sig[:16] + "…")
+    expect(pg.get_by_text("Payment received. Thank you.")).to_be_visible(timeout=60000)
+    expect(pg.locator("[aria-label='Ways to pay']")).to_contain_text("has been paid")
+    link = pg.locator(f"a[href*='{sig}']"); expect(link).to_be_visible(); ok("page flipped to Paid by itself and links to the transaction")
+    pg.screenshot(path=f"{OUT}/pay-paid.png")
+    step("dashboard")
+    pg.goto(f"{BASE}/dashboard"); pg.get_by_role("button", name="Demo merchant").click()
+    pg.wait_for_selector("tbody tr"); expect(pg.get_by_text("Received in SOL")).to_be_visible()
+    assert "Coffee and a croissant" in pg.inner_text("tbody"); ok("dashboard lists the new payment with totals")
+    pg.screenshot(path=f"{OUT}/dashboard.png")
+    pg.goto(f"{BASE}/dashboard?merchant=notanaddress"); expect(pg.locator("p[role=alert]")).to_contain_text("valid Solana"); ok("bad address on the dashboard gives a clear error")
+    step("not found and mobile")
+    pg.goto(f"{BASE}/pay/does-not-exist"); expect(pg.get_by_role("heading", name="Link not found")).to_be_visible(); ok("unknown link shows a friendly page")
+    m = b.new_context(viewport={"width": 390, "height": 844}); mp = m.new_page()
+    mp.goto(BASE); mp.screenshot(path=f"{OUT}/mobile-home.png")
+    mp.goto(href.replace("solana:", "").split("?")[0] and f"{BASE}/dashboard?merchant={MERCHANT}"); mp.wait_for_selector("tbody tr"); mp.screenshot(path=f"{OUT}/mobile-dashboard.png")
+    assert not mp.evaluate("document.documentElement.scrollWidth > innerWidth"), "horizontal overflow"; ok("no horizontal scroll at 390px")
+    b.close()
+print("\nconsole errors:", errors); print("ALL DONE" if not errors else "DONE WITH CONSOLE ERRORS")

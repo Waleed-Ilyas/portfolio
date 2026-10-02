@@ -1,0 +1,182 @@
+import sys, os, re, time, tempfile
+from playwright.sync_api import sync_playwright, expect
+
+BASE = sys.argv[1] if len(sys.argv) > 1 else "http://localhost:5173"
+OUT = sys.argv[2] if len(sys.argv) > 2 else "hireflow-shots/local"
+os.makedirs(OUT, exist_ok=True)
+errors = []
+JOB = "frontend-engineer-dashboards-northwind-labs"
+EMAIL = f"e2e-{int(time.time())}@example.test"
+NAME = f"Erin E2E {int(time.time()) % 100000}"
+
+def step(msg): print(f"\n== {msg}", flush=True)
+def ok(msg): print(f"   PASS {msg}", flush=True)
+
+pdf = os.path.join(tempfile.gettempdir(), "e2e-resume.pdf")
+open(pdf, "wb").write(b"%PDF-1.4\n% e2e resume\n%%EOF")
+fake = os.path.join(tempfile.gettempdir(), "not-a-resume.pdf")
+open(fake, "wb").write(b"MZ this is not a pdf")
+
+def sign_out(pg):
+    pg.get_by_role("button", name="Sign out").first.click()
+    expect(pg.get_by_role("link", name="Sign in").first).to_be_visible()
+
+def sign_in(pg, email, password):
+    pg.goto(BASE + "/login")
+    pg.get_by_label("Email").fill(email)
+    pg.get_by_label("Password").fill(password)
+    pg.get_by_role("button", name="Sign in", exact=True).click()
+    expect(pg.get_by_role("button", name="Sign out").first).to_be_visible()
+
+with sync_playwright() as p:
+    b = p.chromium.launch()
+    ctx = b.new_context(viewport={"width": 1440, "height": 900}, accept_downloads=True)
+    pg = ctx.new_page()
+    pg.on("console", lambda m: errors.append(m.text[:160]) if m.type == "error" else None)
+    pg.on("pageerror", lambda e: errors.append("pageerror: " + str(e)[:160]))
+
+    step("home and job board")
+    pg.goto(BASE)
+    expect(pg.get_by_role("heading", level=1)).to_contain_text("Hiring that")
+    expect(pg.get_by_role("heading", name="Latest jobs")).to_be_visible()
+    pg.screenshot(path=f"{OUT}/01-home.png")
+    ok("home renders with latest jobs")
+    pg.goto(BASE + "/jobs")
+    expect(pg.get_by_text(re.compile(r"\d+ open jobs?"))).to_be_visible()
+    pg.get_by_role("button", name="Remote", exact=True).click()
+    expect(pg).to_have_url(re.compile("workMode=remote"))
+    expect(pg.locator("section[aria-label=Results][aria-busy=false]")).to_be_visible()
+    pg.wait_for_load_state("networkidle")
+    cards = pg.locator("article")
+    assert cards.count() > 0
+    for i in range(cards.count()):
+        assert "Remote" in cards.nth(i).inner_text()
+    ok("work mode filter works and is in the URL")
+    pg.get_by_label("Search", exact=True).fill("solana")
+    expect(pg).to_have_url(re.compile("q=solana"), timeout=5000)
+    pg.get_by_role("button", name="Remote", exact=True).click()
+    expect(pg.get_by_role("link", name="Solana / Rust Engineer")).to_be_visible()
+    pg.screenshot(path=f"{OUT}/02-jobs.png")
+    ok("debounced search finds the Solana job")
+    pg.get_by_role("button", name="Clear filters").click()
+    expect(pg.get_by_label("Search", exact=True)).to_have_value("")
+    ok("clear filters resets the box")
+
+    step("anonymous visitor cannot apply, and is sent back after signing up")
+    pg.goto(f"{BASE}/jobs/{JOB}")
+    expect(pg.get_by_role("heading", name="Interested?")).to_be_visible()
+    pg.screenshot(path=f"{OUT}/03-job-detail.png")
+    pg.get_by_role("link", name="Create account").last.click()
+    pg.get_by_label("Your name").fill(NAME)
+    pg.get_by_label("Email").fill(EMAIL)
+    pg.get_by_label("Password").fill("Passw0rd!")
+    pg.get_by_role("button", name="Create account").click()
+    expect(pg).to_have_url(re.compile(JOB))
+    ok("registered a candidate and returned to the job")
+
+    step("apply: validation first")
+    pg.get_by_role("button", name="Send application").click()
+    expect(pg.get_by_text("Write at least 20 characters.")).to_be_visible()
+    expect(pg.get_by_text("Attach your resume as a PDF or Word file.")).to_be_visible()
+    ok("empty form shows field errors")
+    pg.get_by_label("Cover letter").fill("I build dashboards for a living and would love to join your team.")
+    pg.get_by_label(re.compile("Resume")).set_input_files(fake)
+    pg.get_by_role("button", name="Send application").click()
+    expect(pg.get_by_role("alert").filter(has_text="PDF or Word")).to_be_visible()
+    ok("a file that is not really a PDF is refused by the server")
+    pg.get_by_label(re.compile("Resume")).set_input_files(pdf)
+    pg.get_by_role("button", name="Send application").click()
+    expect(pg.get_by_role("heading", name="Application sent")).to_be_visible()
+    pg.screenshot(path=f"{OUT}/04-applied.png")
+    ok("application sent")
+
+    step("candidate pages")
+    pg.get_by_role("link", name="View my applications").click()
+    row = pg.locator("li.card").filter(has_text="Frontend Engineer, Dashboards")
+    expect(row.get_by_text("Applied", exact=True)).to_be_visible()
+    row.get_by_role("button", name="Show history").click()
+    expect(row.get_by_role("button", name="Open resume")).to_be_visible()
+    with pg.expect_response(re.compile(r"/applications/[0-9a-f]+/resume$")) as r:
+        row.get_by_role("button", name="Open resume").click()
+    link = r.value.json()["url"]
+    assert "cloudinary" in link, link
+    got = ctx.request.get(link)
+    assert got.status == 200 and got.body().startswith(b"%PDF-"), got.status
+    ok("resume link is a signed Cloudinary URL that returns the exact file")
+    for extra in ctx.pages[1:]:
+        extra.close()
+    pg.screenshot(path=f"{OUT}/05-my-applications.png")
+    pg.goto(BASE + "/notifications")
+    expect(pg.get_by_text("We received your application")).to_be_visible()
+    expect(pg.get_by_text("Email sent").first).to_be_visible()
+    pg.screenshot(path=f"{OUT}/06-inbox.png")
+    ok("inbox shows the receipt and that the email was sent")
+    pg.goto(BASE + "/recruiter")
+    expect(pg.get_by_text("Recruiters only")).to_be_visible()
+    ok("a candidate cannot open the recruiter area")
+    sign_out(pg)
+
+    step("recruiter works the pipeline")
+    sign_in(pg, "recruiter@waleed.dev", "Recruit@1234")
+    expect(pg).to_have_url(re.compile("/recruiter$"))
+    expect(pg.get_by_role("heading", name="Hiring funnel")).to_be_visible()
+    expect(pg.locator("svg.recharts-surface").first).to_be_visible()
+    pg.wait_for_timeout(1200)
+    pg.screenshot(path=f"{OUT}/07-dashboard.png", full_page=True)
+    ok("dashboard with charts")
+    pg.goto(BASE + "/recruiter/jobs")
+    pg.get_by_role("link", name="Frontend Engineer, Dashboards").click()
+    expect(pg.get_by_role("heading", level=1)).to_contain_text("Frontend Engineer")
+    pg.get_by_role("button", name=re.compile(NAME)).click()
+    detail = pg.get_by_role("region", name=f"Candidate {NAME}")
+    expect(detail).to_be_visible()
+    pg.screenshot(path=f"{OUT}/08-pipeline.png", full_page=True)
+    detail.get_by_label("Add a private note").fill("Secret: strong portfolio.")
+    detail.get_by_role("button", name="Add note").click()
+    expect(detail.get_by_text("Secret: strong portfolio.")).to_be_visible()
+    detail.get_by_label("Move to the next stage").fill("Great fit for the team")
+    detail.get_by_role("button", name="Move to Screening").click()
+    expect(pg.get_by_role("listitem", name=re.compile("^Screening"))).to_contain_text(NAME)
+    ok("moved the candidate to Screening with a note")
+    sign_out(pg)
+
+    step("candidate sees progress but never the private data")
+    sign_in(pg, EMAIL, "Passw0rd!")
+    pg.goto(BASE + "/applications")
+    row = pg.locator("li.card").filter(has_text="Frontend Engineer, Dashboards")
+    expect(row.get_by_text("Screening", exact=True).first).to_be_visible()
+    row.get_by_role("button", name="Show history").click()
+    body = pg.locator("main").inner_text()
+    assert "Secret: strong portfolio." not in body and "Great fit for the team" not in body and "Riley" not in body
+    ok("notes, history notes and recruiter name are hidden from the candidate")
+    pg.goto(BASE + "/notifications")
+    expect(pg.get_by_text("is now: Screening")).to_be_visible()
+    ok("stage email in the inbox")
+    pg.goto(BASE + "/applications")
+    row = pg.locator("li.card").filter(has_text="Frontend Engineer, Dashboards")
+    row.get_by_role("button", name="Withdraw", exact=True).click()
+    row.get_by_role("button", name="Yes, withdraw").click()
+    expect(row.get_by_text("Withdrawn", exact=True).first).to_be_visible()
+    ok("withdraw works")
+    sign_out(pg)
+
+    step("demo candidate button and mobile layout")
+    pg.goto(BASE + "/login")
+    pg.get_by_role("button", name="Continue as a candidate").click()
+    expect(pg.get_by_role("button", name="Sign out").first).to_be_visible()
+    pg.goto(BASE + "/applications")
+    expect(pg.locator("li.card").first).to_be_visible()
+    ok("demo candidate has sample applications")
+    m = b.new_context(viewport={"width": 390, "height": 844})
+    mp = m.new_page()
+    mp.goto(BASE + "/jobs")
+    expect(mp.locator("article").first).to_be_visible()
+    overflow = mp.evaluate("document.documentElement.scrollWidth > document.documentElement.clientWidth")
+    assert not overflow, "horizontal scroll on mobile"
+    mp.screenshot(path=f"{OUT}/09-mobile-jobs.png")
+    ok("no horizontal scroll at 390px")
+
+    b.close()
+
+print("\nconsole errors:", errors if errors else "none")
+print(f"\nE2E user: {EMAIL}")

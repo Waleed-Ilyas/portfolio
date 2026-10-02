@@ -1,0 +1,79 @@
+$ next dev --turbopack -p 3000
+   ▲ Next.js 15.5.26 (Turbopack)
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.1.10:3000
+   - Environments: .env
+
+ ✓ Starting...
+ ✓ Ready in 15.4s
+ ○ Compiling /api/merchants/[address]/links ...
+ ✓ Compiled /api/merchants/[address]/links in 13.5s
+ GET /api/merchants/GfJ6ut6rmeovF9AmFcJcm5vhtdw7UJpF4x1CnWQfR6D8/links 200 in 1562ms
+ GET /api/merchants/GfJ6ut6rmeovF9AmFcJcm5vhtdw7UJpF4x1CnWQfR6D8/links 200 in 788ms
+ ○ Compiling /api/links ...
+ ✓ Compiled /api/links in 1005ms
+ POST /api/links 201 in 2828ms
+ ○ Compiling /api/links/[id]/status ...
+ ✓ Compiled /api/links/[id]/status in 673ms
+ GET /api/links/Sk7UuRnQWDKr/status 200 in 5186ms
+ POST /api/links 201 in 1141ms
+ GET /api/links/7I7JBs9Z9Xqt/status 200 in 1458ms
+ POST /api/links 201 in 1003ms
+ GET /api/links/xuE-QViPTEV9/status 200 in 1713ms
+ GET /api/links/xuE-QViPTEV9/status 200 in 1497ms
+ GET /api/links/xuE-QViPTEV9/status 200 in 1505ms
+ GET /api/links/xuE-QViPTEV9/status 200 in 1361ms
+ POST /api/links 201 in 942ms
+ GET /api/links/eQ-nphHtWKfC/status 200 in 1636ms
+ GET /api/links/eQ-nphHtWKfC/status 200 in 1644ms
+ GET /api/links/eQ-nphHtWKfC/status 200 in 1570ms
+ GET /api/links/eQ-nphHtWKfC/status 200 in 1507ms
+ POST /api/links 201 in 1032ms
+ GET /api/links/ae9qOKz9Qd1o/status 200 in 1545ms
+ GET /api/links/ae9qOKz9Qd1o/status 200 in 1002ms
+ GET /api/links/ae9qOKz9Qd1o/status 200 in 1083ms
+ GET /api/links/ae9qOKz9Qd1o/status 200 in 969ms
+ POST /api/links 201 in 1447ms
+ GET /api/links/2nxwSZVf_1BN/status 200 in 1522ms
+ POST /api/links 201 in 1168ms
+ GET /api/links/cTzFXrqXajHO/status 200 in 1434ms
+ GET /api/links/cTzFXrqXajHO/status 200 in 1421ms
+ GET /api/links/cTzFXrqXajHO/status 200 in 1582ms
+ GET /api/links/cTzFXrqXajHO/status 200 in 1656ms
+ GET /api/merchants/GfJ6ut6rmeovF9AmFcJcm5vhtdw7UJpF4x1CnWQfR6D8/links 200 in 958ms
+ ○ Compiling / ...
+ ✓ Compiled / in 14.3s
+ GET / 200 in 17650ms
+ POST /api/links 400 in 697ms
+ POST /api/links 400 in 519ms
+ POST /api/links 201 in 1494ms
+ ○ Compiling /pay/[id] ...
+ ✓ Compiled /pay/[id] in 7.4s
+ GET /pay/-9T5SocfwgLt 200 in 11316ms
+ GET /api/links/-9T5SocfwgLt/status 200 in 978ms
+ GET /api/links/-9T5SocfwgLt/status 200 in 1108ms
+ GET /api/links/-9T5SocfwgLt/status 200 in 1541ms
+ ○ Compiling /dashboard ...
+ ✓ Compiled /dashboard in 1629ms
+ GET /dashboard 200 in 2497ms
+ GET /api/merchants/GfJ6ut6rmeovF9AmFcJcm5vhtdw7UJpF4x1CnWQfR6D8/links?page=1 200 in 1070ms
+ GET /dashboard?merchant=notanaddress 200 in 540ms
+ GET /api/merchants/notanaddress/links?page=1 400 in 569ms
+ GET / 200 in 757ms
+ POST /api/links 400 in 604ms
+ POST /api/links 400 in 541ms
+ POST /api/links 201 in 1231ms
+ GET /pay/IiDIHeF9sifR 200 in 734ms
+ GET /api/links/IiDIHeF9sifR/status 200 in 821ms
+ GET /api/links/IiDIHeF9sifR/status 200 in 1040ms
+ GET /api/links/IiDIHeF9sifR/status 200 in 995ms
+ GET /api/links/IiDIHeF9sifR/status 200 in 1142ms
+ GET /dashboard 200 in 665ms
+ GET /api/merchants/GfJ6ut6rmeovF9AmFcJcm5vhtdw7UJpF4x1CnWQfR6D8/links?page=1 200 in 1151ms
+ GET /dashboard?merchant=notanaddress 200 in 598ms
+ GET /api/merchants/notanaddress/links?page=1 400 in 582ms
+ GET /pay/does-not-exist 200 in 1016ms
+ GET / 200 in 473ms
+ GET /dashboard?merchant=GfJ6ut6rmeovF9AmFcJcm5vhtdw7UJpF4x1CnWQfR6D8 200 in 849ms
+ GET /api/merchants/GfJ6ut6rmeovF9AmFcJcm5vhtdw7UJpF4x1CnWQfR6D8/links?page=1 200 in 944ms
+[?25h
