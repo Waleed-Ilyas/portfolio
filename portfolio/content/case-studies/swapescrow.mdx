@@ -1,0 +1,25 @@
+## Overview
+SwapEscrow is a decentralized, peer-to-peer escrow protocol on Solana. It allows two parties to safely exchange tokens without a middleman. A maker locks their tokens into a smart contract vault, and the transaction only settles when a taker fulfills the specific requested token amount.
+
+## Problem
+OTC (Over-The-Counter) token trades between individuals require high trust. If I send you Token A, I have to trust you will send me Token B. SwapEscrow eliminates counterparty risk by enforcing the trade parameters at the blockchain level.
+
+## My Role
+Solana Smart Contract Engineer — Wrote the on-chain Rust program using the Anchor framework, authored the comprehensive test suite, and built the Next.js frontend to interact with the deployed program.
+
+## Tech Decisions & Trade-offs
+- **Anchor Framework:** Chosen over native Rust for its powerful macros, automated security checks, and seamless IDL (Interface Description Language) generation for the frontend client.
+- **Program Derived Addresses (PDAs):** Escrow vaults are managed via PDAs rather than standard keypairs. This ensures the smart contract has sole, deterministic authority over the locked funds, preventing anyone (even the creator) from draining them maliciously.
+- **Devnet Deployment:** The program is deployed on devnet for portfolio demonstration, complete with a suite of Anchor tests verifying edge cases.
+
+## Key Features
+- **Trustless Swaps:** The contract guarantees atomicity—either the trade executes completely, or it doesn't happen at all.
+- **Cancel & Refund:** If a trade goes unfulfilled, the original maker can cancel the escrow and retrieve their locked tokens.
+- **Risk Summaries:** The frontend explicitly parses and displays exactly what tokens will leave the user's wallet and what they will receive before they sign.
+
+## What I Learned
+I mastered the concept of Solana PDAs and cross-program invocations (CPIs). I also learned the critical importance of secure account validation in Anchor to prevent spoofing attacks (e.g., ensuring the provided token mint matches the expected mint).
+
+## What's Next
+- Audit the smart contract for potential reentrancy or account substitution vulnerabilities.
+- Add support for partial fills (allowing multiple takers to fulfill portions of a large order).

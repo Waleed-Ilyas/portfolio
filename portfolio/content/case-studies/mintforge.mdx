@@ -1,0 +1,25 @@
+## Overview
+MintForge is a no-code launchpad for designing and deploying NFT collections on Solana. It provides a visual interface to map out collection metadata, estimate minting costs, and verify collection health before interacting with the blockchain.
+
+## Problem
+Launching an NFT collection involves configuring complex metadata standards, uploading assets to decentralized storage, and deploying a Candy Machine or Metaplex Core contract. MintForge simplifies this by providing a unified, visual dashboard for creators to prepare their drop.
+
+## My Role
+Solana Frontend Engineer — Built the user interface, integrated the Umi library for interacting with Metaplex Core, and implemented the cost estimation logic.
+
+## Tech Decisions & Trade-offs
+- **Metaplex Core & Umi:** Chosen over the legacy Candy Machine standard. Metaplex Core is significantly more lightweight and cheaper to deploy, and Umi is the modern, framework-agnostic client for interacting with it.
+- **Devnet Sandbox:** The application is explicitly constrained to devnet to allow creators to simulate their mints, test the metadata resolution, and verify their artwork without spending real SOL.
+- **Local State Pre-flight:** Instead of uploading directly on every change, the app heavily utilizes client-side state to build the collection manifest, only executing the on-chain transactions when the creator explicitly confirms.
+
+## Key Features
+- **Visual Metadata Builder:** Easily assign traits, attributes, and royalties without writing JSON.
+- **Cost Estimation:** Accurately calculates the SOL required for storage rent and transaction fees before deployment.
+- **Collection Health Dashboard:** Simulates the minting process and verifies that all metadata URIs resolve correctly.
+
+## What I Learned
+I gained a deep understanding of the new Metaplex Core standard and how it fundamentally differs from older SPL token implementations, specifically regarding plugins and the efficiency of single-account NFTs.
+
+## What's Next
+- Integrate Irys (formerly Bundlr) for seamless, decentralized upload of image assets and JSON metadata to Arweave.
+- Add support for allowlists and tiered minting phases.

@@ -1,0 +1,25 @@
+## Overview
+HireFlow is a dual-sided job board and mini Applicant Tracking System (ATS). It allows companies to post jobs and manage inbound applications through a visual pipeline, while giving candidates a streamlined application portal with resume uploads.
+
+## Problem
+Recruiting workflows are often split between a public-facing career site and a clunky internal ATS. I built HireFlow to unify these systems, providing a polished experience for both the applicant applying and the recruiter reviewing the application.
+
+## My Role
+Full Stack Developer — Built the entire platform, including the applicant portal, the recruiter dashboard, the file upload pipeline, and the transactional email system.
+
+## Tech Decisions & Trade-offs
+- **MERN Stack:** Standardized on MongoDB and Express to rapidly iterate on the complex, relational-style data models required for a dual-sided marketplace (Users, Companies, Jobs, Applications).
+- **Resend:** Used for transactional emails (application confirmations, interview invites) due to its developer-friendly API and React Email support, avoiding the complexity of SendGrid.
+- **Cloudinary:** Handles the secure upload and storage of candidate resumes (PDFs) and company logos.
+
+## Key Features
+- **Visual Pipeline:** Recruiters can drag and drop candidates through stages (Applied, Interview, Offer, Rejected) on a Kanban-style board.
+- **Role-Based Workflows:** Strict separation of concerns between Candidate accounts and Employer accounts, enforced via JWT middleware.
+- **Email Notifications:** Automated email triggers when an application is received or its status changes.
+
+## What I Learned
+I learned the intricacies of modeling complex relationships in MongoDB (e.g., embedding vs. referencing) to optimize read performance for the recruiter dashboard while keeping candidate data isolated and secure.
+
+## What's Next
+- Integrate an AI parser to automatically extract skills and experience from uploaded PDF resumes.
+- Add an interview scheduling feature linked to Google Calendar.

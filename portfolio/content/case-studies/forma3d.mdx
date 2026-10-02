@@ -1,0 +1,25 @@
+## Overview
+Forma3D is a highly interactive product configurator built for the web. It allows users to visualize a product in 3D, change its materials and colors in real-time, see instant pricing updates, and generate a shareable link that preserves their exact configuration.
+
+## Problem
+Standard e-commerce experiences rely on static image carousels, which fail to capture the complexity of highly customizable physical products (like premium furniture). Existing 3D solutions are often heavy, require plugins, or suffer from long loading times, leading to high bounce rates.
+
+## My Role
+Solo Developer — Designed the configurator interface, optimized the 3D assets for web delivery, built the state management for pricing, and implemented the sharing features.
+
+## Tech Decisions & Trade-offs
+- **React Three Fiber (R3F):** Chosen over vanilla Three.js for its declarative component structure, which integrates perfectly with React's reactivity.
+- **Zustand:** Used for state management instead of Redux or React Context. It provides a lightweight, boilerplate-free way to manage the complex configuration state (selected parts, materials, base price) across the UI and the canvas.
+- **Performance:** A known trade-off in WebGL apps is the initial bundle and asset size. I used Draco compression for the glTF models and lazy-loaded the 3D canvas only after the main UI (like the pricing and options panel) became interactive.
+
+## Key Features
+- **Real-time Material Swapping:** Instantly change textures and colors on specific meshes without reloading the model.
+- **Dynamic Pricing Engine:** Calculates total cost based on the specific combination of premium vs. standard materials chosen.
+- **URL Serialization:** The exact configuration state is encoded into the URL query parameters, allowing users to bookmark or share their specific design instantly.
+
+## What I Learned
+I learned how to bridge the gap between DOM-based UI state and WebGL canvas state efficiently, preventing unnecessary re-renders in the React tree while keeping the 3D scene perfectly synced.
+
+## What's Next
+- Integrate AR (Augmented Reality) via WebXR so users can project the configured product into their living room.
+- Add an "Export to PDF" feature for formal quoting.

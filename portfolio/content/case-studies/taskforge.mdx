@@ -1,0 +1,25 @@
+## Overview
+TaskForge is a collaborative, real-time Kanban board designed for engineering teams. It features live updates, drag-and-drop task management, presence indicators, and activity tracking, simulating the core experience of tools like Jira or Linear.
+
+## Problem
+Most task management tutorials build simple CRUD apps that require a hard refresh to see updates from other users. I wanted to build a truly collaborative environment where multiple users can edit the same board simultaneously without state conflicts or race conditions.
+
+## My Role
+Full Stack Developer — Designed the real-time architecture, implemented the WebSocket server, built the drag-and-drop interface, and handled optimistic UI updates.
+
+## Tech Decisions & Trade-offs
+- **Socket.io:** Chosen over raw WebSockets or Server-Sent Events for its built-in fallback mechanisms, broadcasting capabilities, and easy integration with the Express backend.
+- **dnd-kit:** Selected for drag-and-drop interactions in React. It offers excellent accessibility, touch support, and performance compared to older libraries like react-beautiful-dnd.
+- **Optimistic UI:** When a user moves a card, the UI updates instantly while the network request fires in the background. A trade-off is the need for complex rollback logic if the server rejects the move.
+
+## Key Features
+- **Real-time Sync:** Boards, tasks, and comments update instantly for all connected clients.
+- **Live Presence:** See who else is currently viewing the board via active user avatars.
+- **Activity Log:** An immutable audit trail of all changes made to a task (e.g., "User A moved this to In Progress").
+
+## What I Learned
+Managing distributed state is hard. I learned how to handle race conditions where two users attempt to modify the same task simultaneously, implementing server-side validation and conflict resolution strategies to ensure the single source of truth remains stable.
+
+## What's Next
+- Add rich text editing for task descriptions using TipTap or Slate.js.
+- Implement web push notifications for task assignments and mentions.

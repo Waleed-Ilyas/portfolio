@@ -1,0 +1,25 @@
+## Overview
+SolPay Checkout is a decentralized payment gateway utilizing the Solana Pay specification. It allows merchants to generate dynamic QR codes and payment links for SOL or USDC, instantly verifying the on-chain settlement without intermediaries or processing fees.
+
+## Problem
+Traditional payment gateways (like Stripe or PayPal) charge significant percentage fees and hold funds for days. Web3 native users want to pay with crypto directly, but merchants need a reliable way to know *which* customer paid for *what* order instantly.
+
+## My Role
+Full Stack Engineer — Implemented the Solana Pay transaction request protocol, built the backend polling verification, and designed the merchant dashboard using Neon Postgres.
+
+## Tech Decisions & Trade-offs
+- **Solana Pay Spec:** I implemented the transfer request specification directly using `@solana/web3.js` rather than relying on bloated abstraction libraries. This provided finer control over the transaction reference keys.
+- **Reference Keys:** The core mechanism relies on generating a unique, single-use public key (the reference) and appending it to the payment transaction. The backend then listens for transactions containing this exact reference on the blockchain.
+- **Neon Postgres:** Used to reliably store the payment session links and merchant data, offering serverless PostgreSQL that scales perfectly with Vercel.
+
+## Key Features
+- **Dynamic QR Codes:** Generates scannable Solana Pay URLs compatible with Phantom, Solflare, and other ecosystem wallets.
+- **Instant Settlement Verification:** The UI flips to a "Paid" state within seconds of the transaction confirming on-chain, utilizing RPC subscription polling.
+- **Merchant Dashboard:** A clean overview of generated links, payment statuses, and historical revenue.
+
+## What I Learned
+I learned the intricacies of on-chain verification—specifically, not just checking that a transaction exists, but cryptographically verifying that the amount, recipient, and signature match the exact expectations to prevent spoofing attacks.
+
+## What's Next
+- Implement the Solana Pay Transaction Request spec (where the server dynamically builds the transaction for the wallet to sign, enabling complex logic like NFT gating or discounts).
+- Add support for fiat-denominated pricing (e.g., "$10 USD") that auto-converts to the correct SOL amount at the time of scan.

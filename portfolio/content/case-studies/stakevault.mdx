@@ -1,0 +1,25 @@
+## Overview
+StakeVault is a decentralized staking protocol built on Solana. It allows users to lock up their SPL tokens to earn yield over time. The project features a realistic vault dashboard that projects reward emissions and manages unstaking cooldown periods.
+
+## Problem
+Many Web3 projects need a way to incentivize long-term holding of their token. Building a custom staking contract from scratch is complex and prone to security vulnerabilities. StakeVault serves as a robust, verifiable template for time-based token emissions.
+
+## My Role
+Solana Smart Contract Engineer — Developed the Anchor (Rust) smart contract handling the staking math, wrote the edge-case tests, and built the Next.js frontend dashboard.
+
+## Tech Decisions & Trade-offs
+- **Anchor (Rust):** Utilized for its robust security features and streamlined account deserialization.
+- **Math Precision:** Time-based reward calculations on-chain can suffer from precision loss. I implemented careful integer math and scaling factors to ensure fair and accurate reward accrual without utilizing heavy floating-point operations.
+- **Global State vs. User State:** The protocol uses a global PDA to track the total staked amount and reward rates, while individual user PDAs track their specific deposits and accrued yields.
+
+## Key Features
+- **Dynamic Yield Accrual:** Rewards are calculated continuously based on the time elapsed since the last interaction (deposit/claim).
+- **Cooldown Periods:** To prevent sudden liquidity shocks, unstaking requests initiate a lockup period before the funds can be withdrawn to the wallet.
+- **Admin Controls:** The protocol authority can adjust the reward emission rate globally.
+
+## What I Learned
+I learned how to manage time dependencies on a blockchain (using the `Clock` sysvar) and how to securely design protocols that handle "lazy evaluation" of rewards—updating user state only when they interact with the contract rather than relying on expensive, continuous global updates.
+
+## What's Next
+- Implement compounding features so users can auto-reinvest their rewards.
+- Add support for NFT-boosted yields (holding a specific NFT increases the emission rate).

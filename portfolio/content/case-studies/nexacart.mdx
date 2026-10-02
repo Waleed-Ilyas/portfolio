@@ -1,0 +1,26 @@
+## Overview
+NexaCart is a full-featured e-commerce platform built on the MERN stack. It handles the complete customer journey from product discovery and cart management to secure checkout via Stripe, along with a dedicated admin dashboard for inventory and sales tracking.
+
+## Problem
+Building a custom storefront often involves stitching together fragmented third-party services. I wanted to build a cohesive, end-to-end e-commerce pipeline from scratch to deeply understand the architecture required for secure payments, inventory consistency, and role-based access.
+
+## My Role
+Full Stack Developer — Architected the MongoDB schemas, wrote the Express REST APIs, integrated Stripe webhooks for secure payment confirmation, and built the React client interface.
+
+## Tech Decisions & Trade-offs
+- **Redux Toolkit:** Selected for client state management to handle complex cart logic, user sessions, and product filtering efficiently across the application.
+- **Stripe Webhooks:** Instead of trusting the client to confirm a successful payment, the backend listens for asynchronous webhook events from Stripe to securely transition order statuses and deduct inventory.
+- **Cloudinary:** Used for product image hosting to offload bandwidth and utilize automatic image optimization and responsive delivery.
+- **Database:** Chosen MongoDB for its flexible schema design, which is ideal for a catalog with highly variable product attributes.
+
+## Key Features
+- **Secure Checkout:** Integrated Stripe Elements for PCI-compliant payment processing.
+- **Admin Dashboard:** Role-based access control protecting an admin suite that includes sales charts, order management, and CRUD operations for products.
+- **Advanced Filtering:** Server-side pagination, sorting, and faceted search to handle large product catalogs efficiently.
+
+## What I Learned
+I gained a deep understanding of idempotency and eventual consistency when dealing with financial transactions—specifically handling edge cases where a user closes the browser before the client can register a successful payment, but the webhook still reliably updates the database.
+
+## What's Next
+- Implement a Redis caching layer for the product catalog to reduce database load.
+- Add OAuth (Google/GitHub) alongside the standard email/password authentication.

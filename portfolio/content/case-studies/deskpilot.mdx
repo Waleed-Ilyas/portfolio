@@ -1,0 +1,25 @@
+## Overview
+DeskPilot is an AI-augmented helpdesk platform designed for support teams. It acts as a central inbox for customer queries and uses Large Language Models to automatically categorize tickets, assess priority, and draft suggested replies for agents.
+
+## Problem
+Customer support teams spend countless hours on triage—reading tickets just to assign them to the right department or determine their urgency. DeskPilot automates this first touch, allowing human agents to focus on resolution rather than routing.
+
+## My Role
+Full Stack Developer — Integrated the LLM API, designed the database schema for the ticketing system, and built the agent dashboard with real-time status filtering.
+
+## Tech Decisions & Trade-offs
+- **Next.js App Router:** Leveraged React Server Components for heavy data fetching, keeping the client bundle lightweight.
+- **Prisma & PostgreSQL:** Used Prisma ORM for type-safe database queries. Relational data (Users, Tickets, Messages, AI Logs) was a perfect fit for Postgres.
+- **Claude API / AI Fallbacks:** The AI integration is treated as an enhancement, not a dependency. If the API key is missing or the service is down, the platform gracefully degrades to a standard manual-triage helpdesk.
+
+## Key Features
+- **Auto-Triage:** Inbound tickets are instantly scanned and tagged with a category (e.g., Billing, Technical) and priority.
+- **Suggested Replies:** The AI reads the context of the ticket thread and generates a draft response that the agent can edit before sending.
+- **SLA Tracking:** Visual indicators highlight tickets that are nearing their Service Level Agreement breach times.
+
+## What I Learned
+I learned how to effectively prompt engineer and structure LLM outputs (forcing JSON formats) to reliably integrate non-deterministic AI responses into a strict, deterministic database workflow.
+
+## What's Next
+- Implement a RAG (Retrieval-Augmented Generation) pipeline so the AI can base its suggested replies on a company knowledge base.
+- Add WebSocket support for real-time ticket collisions (showing when another agent is viewing the same ticket).

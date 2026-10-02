@@ -1,0 +1,25 @@
+## Overview
+TokenForge is a developer tool on the Solana devnet that streamlines the token creation process. It allows users to launch standard SPL tokens or new Token-2022 assets with embedded metadata, all via a clean web interface in a single transaction.
+
+## Problem
+Creating a token on Solana historically required using the command-line interface (CLI) or writing custom scripts. Adding metadata (name, symbol, image) required interacting with separate Metaplex programs. TokenForge abstracts this complexity into a simple, form-driven UI.
+
+## My Role
+Solana Frontend Engineer — Designed the UI, integrated the Solana Wallet Adapter, and wrote the complex transaction logic bridging `@solana/web3.js`, the SPL Token program, and Metaplex.
+
+## Tech Decisions & Trade-offs
+- **Token-2022 vs Standard SPL:** TokenForge supports both. Standard SPL relies on Metaplex for metadata, while Token-2022 allows metadata to be native to the mint via extensions. Supporting both required complex conditional transaction building.
+- **Devnet Only:** For safety and portfolio demonstration, the app is hardcoded to Solana devnet to prevent users from accidentally spending real SOL.
+- **Transaction Batching:** Creating a token involves creating a mint account, initializing it, creating an associated token account, minting supply, and attaching metadata. TokenForge bundles these into a single atomic transaction.
+
+## Key Features
+- **One-Click Launch:** Deploy a fully functional token to the blockchain in seconds.
+- **Metadata Support:** Easily assign a name, ticker symbol, and logo URL.
+- **Supply Management:** Mint initial supply directly to the creator's wallet.
+
+## What I Learned
+I deeply learned the anatomy of a Solana transaction—specifically how to calculate rent-exemption requirements, handle recent blockhashes, and organize multiple instructions into a single, atomic payload.
+
+## What's Next
+- Add support for uploading images directly to Arweave/Irys instead of relying on external URLs.
+- Implement revoke-authority features (Freeze Authority, Mint Authority) to prove token safety to investors.

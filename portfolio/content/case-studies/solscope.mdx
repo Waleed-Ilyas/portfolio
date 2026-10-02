@@ -1,0 +1,26 @@
+## Overview
+SolScope is a dedicated dashboard for inspecting any Solana address. It decodes transactions, fetches SPL token balances, and aggregates NFT metadata, presenting everything in an easy-to-read financial summary.
+
+## Problem
+Solana explorers are powerful but often too dense for a quick portfolio check. They show raw program logs and instruction data rather than a unified "what do I actually own" view. I needed a simpler tool to paste an address and instantly see the net worth, tokens, and recent readable activity.
+
+## My Role
+Solo Developer — Designed the interface, built the Next.js frontend, integrated the Helius RPC for enhanced on-chain queries, and deployed the final application.
+
+## Tech Decisions & Trade-offs
+- **Next.js App Router:** Used for seamless server-side rendering of initial wallet data to improve time-to-glass.
+- **Helius API:** Essential for the Enriched Transaction history, parsing raw Solana instructions into readable "Swapped X for Y" format. 
+- **TanStack Query:** Handles client-side polling and caching for real-time balance updates without hammering the RPC.
+- **Rate Limiting:** A known trade-off is the Helius free tier rate limit. I implemented a local pacing queue to batch and stagger RPC requests, preventing 429 errors on heavy wallets.
+
+## Key Features
+- **Instant Portfolio Valuation:** Real-time pricing via Jupiter API.
+- **Decoded Transactions:** Clear history of swaps, transfers, and NFT mints.
+- **NFT Gallery:** Fetches compressed and standard NFT metadata seamlessly.
+
+## What I Learned
+Working deeply with the Solana JSON RPC taught me the complexities of handling pagination and rate limits in a highly concurrent blockchain environment. I also gained experience optimizing large data payloads for the React rendering cycle.
+
+## What's Next
+- Integrate wallet-adapter to allow authenticated actions.
+- Add support for multiple addresses and aggregated views.

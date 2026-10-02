@@ -1,0 +1,25 @@
+## Overview
+LedgerLite is a comprehensive personal finance dashboard. It allows users to track their net worth, categorize transactions, set monthly budgets, and visualize their spending habits through interactive charts.
+
+## Problem
+Many finance apps are either too simplistic or overwhelmingly complex, requiring users to link bank accounts immediately. LedgerLite was built as a privacy-first, manual-entry alternative that provides immediate visual feedback on financial health without the overhead of Plaid integrations.
+
+## My Role
+Full Stack Developer — Architected the database, built the secure REST API, designed the data visualization components, and implemented the client-side routing.
+
+## Tech Decisions & Trade-offs
+- **Vite + React (Client):** Chosen for its blazing-fast HMR and build times compared to Create React App.
+- **PostgreSQL (Neon):** Moved away from NoSQL to a strict relational database to ensure ACID compliance and data integrity for financial records.
+- **Recharts:** Selected for data visualization because of its composability and out-of-the-box responsiveness in React.
+
+## Key Features
+- **Transaction Categorization:** Users can tag expenses and incomes, which instantly updates the budget progress bars.
+- **Interactive Dashboards:** Visual breakdowns of spending mixes, income vs. expenses, and historical net worth trends.
+- **Multi-Account Support:** Track cash, credit cards, and investment portfolios independently.
+
+## What I Learned
+I developed a strong appreciation for SQL constraints and database-level validation. When dealing with financial data, ensuring that balances mathematically align with the transaction ledger requires rigorous backend logic and cannot be trusted to the client.
+
+## What's Next
+- Implement CSV import/export functionality for bulk transaction handling.
+- Add a recurring transaction engine to automatically log monthly subscriptions.

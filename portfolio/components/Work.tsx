@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { categories, projects, type Project } from "@/content/projects";
 import { Reveal } from "./Reveal";
 
@@ -48,6 +49,9 @@ function Card({ p, large }: { p: Project; large?: boolean }) {
             Code
           </a>
         )}
+        <Link href={`/work/${p.slug}`} className="btn">
+          Case study
+        </Link>
       </div>
     </article>
   );
