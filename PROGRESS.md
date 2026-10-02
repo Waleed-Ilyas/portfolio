@@ -222,3 +222,10 @@
 - The README now reflects the final recruiter-facing positioning, stronger technical summary, and honest project emphasis.
 - Recommended pinned repos remain: `solscope`, `forma3d`, `tokenforge`, `nexacart`, `taskforge`, `solpay`.
 - The portfolio and profile are now aligned and ready for recruiter outreach without overstating production claims.
+
+## Phase 5 MDX Case Studies - COMPLETED
+- Configured `@next/mdx` and `@tailwindcss/typography` in the `portfolio` app.
+- Created the dynamic App Router template `app/work/[slug]/page.tsx`.
+- Wrote detailed, high-quality MDX case studies for all 12 projects in `portfolio/content/case-studies/`.
+- Updated `Work.tsx` to include the functional `Case study` buttons.
+- Final build verified; all 12 static case study pages are generated flawlessly.
